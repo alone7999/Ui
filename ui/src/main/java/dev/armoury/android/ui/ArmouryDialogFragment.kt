@@ -23,7 +23,7 @@ abstract class ArmouryDialogFragment<UA: ArmouryUiAction, T: ViewDataBinding, V 
     override fun onAttach(context: Context) {
         logState("Attached")
         super.onAttach(context)
-        if (context is ArmouryActivity<*, *>) {
+        if (context is ArmouryActivity<*, *, *>) {
             activity = context
         } else {
             throw IllegalStateException("You have to use a BaseActivity or one of its children as the container activity")
