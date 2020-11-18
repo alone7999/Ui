@@ -2,12 +2,14 @@ package dev.armoury.android.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import dev.armoury.android.R
+import dev.armoury.android.data.ArmouryUiAction
 import dev.armoury.android.lifecycle.SingleLiveEvent
 import dev.armoury.android.widget.MessageView
 import dev.armoury.android.widget.data.MessageModel
-import dev.armoury.android.R
 
-abstract class ArmouryWebViewViewModel(applicationContext: Application) : ArmouryViewModel(applicationContext) {
+abstract class ArmouryWebViewViewModel<UA : ArmouryUiAction>(applicationContext: Application) :
+    ArmouryViewModel<UA>(applicationContext = applicationContext) {
 
     abstract fun loadingMessage(): Int?
     abstract fun loadingErrorMessage(): Int?

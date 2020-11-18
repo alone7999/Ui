@@ -22,7 +22,8 @@ import timber.log.Timber
 import java.io.IOException
 import java.net.HttpURLConnection
 
-abstract class ArmouryViewModel<UA: ArmouryUiAction>(protected val applicationContext : Application) : AndroidViewModel(applicationContext), ViewModelGeneralFunctions {
+abstract class ArmouryViewModel<UA : ArmouryUiAction>(protected val applicationContext: Application) :
+    AndroidViewModel(applicationContext), ViewModelGeneralFunctions {
 
     private val _authenticationFailed = MutableLiveData(false)
     val authenticationFailed: LiveData<Boolean>
@@ -81,6 +82,7 @@ abstract class ArmouryViewModel<UA: ArmouryUiAction>(protected val applicationCo
     //  Refresh Listener
     val refreshListener =
         SwipeRefreshLayout.OnRefreshListener { sendServerRequest(isRefresh = true) }
+
     //  Enable Swipe Refresh
     internal val _swipeRefreshEnable = MutableLiveData(false)
     val swipeRefreshEnable: LiveData<Boolean>
@@ -89,6 +91,7 @@ abstract class ArmouryViewModel<UA: ArmouryUiAction>(protected val applicationCo
     protected val _refreshFailedMessage = MutableLiveData<MessageModel>()
     val refreshFailedMessage: LiveData<MessageModel>
         get() = _refreshFailedMessage
+
     //  End of Enable Swipe Refresh
     //  is Refreshing
     internal val _refreshing = MutableLiveData(false)
@@ -147,7 +150,11 @@ abstract class ArmouryViewModel<UA: ArmouryUiAction>(protected val applicationCo
                 showLoading(isLoading = false, requestCode = requestCode)
                 when {
                     requestResult.isSuccessful ->
-                        onResponseGot(body = requestResult.body(), requestCode = requestCode, responseCode = requestResult.code())
+                        onResponseGot(
+                            body = requestResult.body(),
+                            requestCode = requestCode,
+                            responseCode = requestResult.code()
+                        )
                     else -> {
                         handleError(
                             resultCode = requestResult.code(),
@@ -199,7 +206,7 @@ abstract class ArmouryViewModel<UA: ArmouryUiAction>(protected val applicationCo
                 } else {
                     onRequestFailed(errorModel = errorModel)
                 }
-            } catch (e : Exception) {
+            } catch (e: Exception) {
                 handleBadResponse(requestCode = requestCode)
             }
         } ?: run {
@@ -284,10 +291,11 @@ abstract class ArmouryViewModel<UA: ArmouryUiAction>(protected val applicationCo
         handleErrorInChild(errorModel)
     }
 
-    protected open fun isListRequest(requestCode : Int) : Boolean = false
+    protected open fun isListRequest(requestCode: Int): Boolean = false
 
     protected abstract fun handleErrorInChild(errorModel: ErrorModel)
 }
+
 //  TODO : Better naming
 interface ViewModelGeneralFunctions {
 

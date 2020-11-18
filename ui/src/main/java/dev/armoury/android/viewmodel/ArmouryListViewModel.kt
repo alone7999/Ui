@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.armoury.android.data.ArmouryListRowModel
+import dev.armoury.android.data.ArmouryUiAction
 import dev.armoury.android.data.ErrorModel
 import dev.armoury.android.utils.ArmouryListUtils
 import dev.armoury.android.widget.MessageView
@@ -12,8 +13,8 @@ import dev.armoury.android.widgets.LoadMoreRecyclerListener
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-abstract class ArmouryListViewModel<LRM : ArmouryListRowModel>(application: Application) :
-    ArmouryViewModel(application) {
+abstract class ArmouryListViewModel<UA: ArmouryUiAction, LRM : ArmouryListRowModel>(application: Application) :
+    ArmouryViewModel<UA>(applicationContext = application) {
 
     //    Variables
     @get:ArmouryListUtils.RequestType
