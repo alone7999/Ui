@@ -1,11 +1,8 @@
 package dev.armoury.android.utils
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.core.app.ActivityCompat
 
 open class ArmouryIntentUtils {
 
@@ -19,12 +16,6 @@ open class ArmouryIntentUtils {
         }
     }
 
-    fun hasWriteExternalPermission(context: Context) =
-        hasPermission(
-            context = context,
-            permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
-
     fun getOpenWebPageInt(context: Context, url: String?): Intent? {
         val webPage = Uri.parse(url)
         val intent = Intent(Intent.ACTION_VIEW, webPage)
@@ -32,6 +23,12 @@ open class ArmouryIntentUtils {
             intent
         } else {
             null
+        }
+    }
+
+    fun shareText(context: Context, text: String?) {
+        getShareTextIntent(context = context, text = text)?.let {
+            context.applicationContext.startActivity(it)
         }
     }
 
@@ -43,9 +40,6 @@ open class ArmouryIntentUtils {
             if (shareTextIntent.resolveActivity(context.packageManager) != null) shareTextIntent else null
         }
     }
-
-    private fun hasPermission(context: Context, permission: String) =
-        ActivityCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
 
 
 }
