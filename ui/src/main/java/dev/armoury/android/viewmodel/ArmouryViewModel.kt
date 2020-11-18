@@ -40,7 +40,7 @@ abstract class ArmouryViewModel<UA : ArmouryUiAction>(protected val applicationC
     protected open val emptyMessageModel: MessageModel =
         MessageModel(state = MessageView.States.NORMAL)
 
-    protected val _uiAction = SingleLiveEvent<UA?>(value = null)
+    private val _uiAction = SingleLiveEvent<UA?>(value = null)
     val uiAction: LiveData<UA?>
         get() = _uiAction
 
@@ -292,6 +292,10 @@ abstract class ArmouryViewModel<UA : ArmouryUiAction>(protected val applicationC
     }
 
     protected open fun isListRequest(requestCode: Int): Boolean = false
+
+    protected fun setUiAction(action: UA, delayInMillis: Long = 0) {
+        _uiAction.value = action
+    }
 
     protected abstract fun handleErrorInChild(errorModel: ErrorModel)
 }
