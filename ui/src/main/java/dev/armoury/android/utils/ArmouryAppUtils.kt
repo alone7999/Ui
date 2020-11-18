@@ -4,7 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
+import androidx.core.app.ActivityCompat
 
 open class ArmouryAppUtils {
 
@@ -23,12 +23,10 @@ open class ArmouryAppUtils {
     /**
      * Check whether we have the storage permission or not
      */
-    fun hasStoragePermission(context: Context): Boolean {
-        return hasNeededPermission(
-            context,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
-    }
+    fun hasWriteExternalPermission(context: Context) = hasNeededPermission(
+        context = context,
+        permission = Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
 
     /**
      * Check whether we have the given permission or not
@@ -36,10 +34,8 @@ open class ArmouryAppUtils {
     private fun hasNeededPermission(
         context: Context,
         permission: String
-    ): Boolean {
-        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
-                context.checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED
-    }
+    ) = ActivityCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+
     /*
      * End of the permission related
      */
