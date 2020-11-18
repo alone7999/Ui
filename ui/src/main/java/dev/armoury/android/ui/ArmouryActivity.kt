@@ -6,9 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
+import dev.armoury.android.data.ArmouryUiAction
+import dev.armoury.android.viewmodel.ArmouryViewModel
 import timber.log.Timber
 
-abstract class ArmouryActivity<T: ViewDataBinding, V: ViewModel> : AppCompatActivity() {
+abstract class ArmouryActivity<UA: ArmouryUiAction, T: ViewDataBinding, V: ArmouryViewModel<UA>> : AppCompatActivity() {
 
     /**
      * If an [android.app.Activity] has a getIntent() function and someone
@@ -73,7 +75,9 @@ abstract class ArmouryActivity<T: ViewDataBinding, V: ViewModel> : AppCompatActi
         super.onDestroy()
     }
 
-    protected open fun startObserving() {}
+    protected open fun startObserving() {
+        viewModel.uiAction.observe(this, this::handleUiAction)
+    }
 
     protected abstract fun gatherDataFromIntent(data : Bundle?)
 
@@ -85,6 +89,8 @@ abstract class ArmouryActivity<T: ViewDataBinding, V: ViewModel> : AppCompatActi
     protected abstract fun setViewNeededData()
 
     protected abstract fun doOtherTasks()
+
+    protected open fun handleUiAction(action: UA?) {}
 
     protected fun onArgumentsNotProvided() {
         activityStartedIllegally = true
