@@ -22,6 +22,20 @@ open class ArmouryConnectionUtils {
             }
         }
 
+    fun getAbsoluteUrl(url: String?, baseUrl: String): String? =
+        url?.let {
+            try {
+                val uri = URI(url)
+                if (!uri.isAbsolute) {
+                    "${baseUrl.removeSuffix("/")}/${url.removePrefix("/")}"
+                } else {
+                    url
+                }
+            } catch (e: URISyntaxException) {
+                null
+            }
+        }
+
 
     companion object {
 
