@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import dev.armoury.android.R
+import dev.armoury.android.data.ArmouryUiAction
 import dev.armoury.android.data.ErrorModel
 import dev.armoury.android.lifecycle.SingleLiveEvent
 import dev.armoury.android.utils.ArmouryConnectionUtils
@@ -21,7 +22,7 @@ import timber.log.Timber
 import java.io.IOException
 import java.net.HttpURLConnection
 
-abstract class ArmouryViewModel(protected val applicationContext : Application) : AndroidViewModel(applicationContext), ViewModelGeneralFunctions {
+abstract class ArmouryViewModel<UA: ArmouryUiAction>(protected val applicationContext : Application) : AndroidViewModel(applicationContext), ViewModelGeneralFunctions {
 
     private val _authenticationFailed = MutableLiveData(false)
     val authenticationFailed: LiveData<Boolean>
@@ -37,6 +38,10 @@ abstract class ArmouryViewModel(protected val applicationContext : Application) 
 
     protected open val emptyMessageModel: MessageModel =
         MessageModel(state = MessageView.States.NORMAL)
+
+    protected val _uiAction = SingleLiveEvent<UA?>(value = null)
+    val uiAction: LiveData<UA?>
+        get() = _uiAction
 
     private val _showLoading = SingleLiveEvent(false)
     val showLoading: LiveData<Boolean>
