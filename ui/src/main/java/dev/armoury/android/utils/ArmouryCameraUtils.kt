@@ -18,7 +18,7 @@ class ArmouryCameraUtils(baseFolderName: String, minimumWith: Int, minimumHeight
 
     fun takePhoto(
         context: Context,
-        fragment: ArmouryFragment<*, *>,
+        fragment: ArmouryFragment<*, *, *>,
         providerAddress: String,
         requestCode: Int
     ) {
@@ -41,9 +41,7 @@ class ArmouryCameraUtils(baseFolderName: String, minimumWith: Int, minimumHeight
                     }
                 }
             }
-        } catch (ignore: Exception) {
-            Log.e("Hazhir", "Error : $ignore")
-        }
+        } catch (ignore: Exception) {}
     }
 
 

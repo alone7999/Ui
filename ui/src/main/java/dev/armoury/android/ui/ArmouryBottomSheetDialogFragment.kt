@@ -12,10 +12,11 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dev.armoury.android.data.ArmouryUiAction
 import dev.armoury.android.viewmodel.ArmouryViewModel
 import timber.log.Timber
 
-abstract class ArmouryBottomSheetDialogFragment<T: ViewDataBinding, V : ArmouryViewModel> :
+abstract class ArmouryBottomSheetDialogFragment<UA: ArmouryUiAction, T: ViewDataBinding, V : ArmouryViewModel<UA>> :
     BottomSheetDialogFragment() {
 
     protected lateinit var activity: AppCompatActivity

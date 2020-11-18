@@ -9,10 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
+import dev.armoury.android.data.ArmouryUiAction
 import dev.armoury.android.viewmodel.ArmouryViewModel
 import timber.log.Timber
 
-abstract class ArmouryDialogFragment<T: ViewDataBinding, V : ArmouryViewModel> : DialogFragment() {
+abstract class ArmouryDialogFragment<UA: ArmouryUiAction, T: ViewDataBinding, V : ArmouryViewModel<UA>> : DialogFragment() {
 
     protected lateinit var activity: AppCompatActivity
     protected lateinit var viewDataBinding: T

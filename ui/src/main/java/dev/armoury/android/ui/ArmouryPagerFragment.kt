@@ -6,10 +6,11 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dev.armoury.android.adapters.ArmouryFragmentPagerAdapter
+import dev.armoury.android.data.ArmouryUiAction
 import dev.armoury.android.viewmodel.ArmouryPagerViewModel
 
-abstract class ArmouryPagerFragment<T : ViewDataBinding, V : ArmouryPagerViewModel<*>> :
-    ArmouryFragment<T, V>() {
+abstract class ArmouryPagerFragment<UA: ArmouryUiAction, T : ViewDataBinding, V : ArmouryPagerViewModel<UA, *>> :
+    ArmouryFragment<UA, T, V>() {
 
     abstract fun createViewPagerAdapter(): ArmouryFragmentPagerAdapter<*>
     abstract fun getViewPager(): ViewPager2

@@ -4,10 +4,11 @@ import android.graphics.Color
 import android.webkit.*
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
+import dev.armoury.android.data.ArmouryUiAction
 import dev.armoury.android.viewmodel.ArmouryWebViewViewModel
 
-abstract class ArmouryWebViewFragment<T : ViewDataBinding, V : ArmouryWebViewViewModel> :
-    ArmouryFragment<T, V>() {
+abstract class ArmouryWebViewFragment<UA: ArmouryUiAction, T : ViewDataBinding, V : ArmouryWebViewViewModel<UA>> :
+    ArmouryFragment<UA, T, V>() {
 
     private val webUrlObserver: Observer<String?> by lazy {
         Observer<String?> { url -> if (!url.isNullOrEmpty()) loadWebPage(url) }

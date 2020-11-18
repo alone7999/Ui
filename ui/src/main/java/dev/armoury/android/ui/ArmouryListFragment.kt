@@ -3,12 +3,13 @@ package dev.armoury.android.ui
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import dev.armoury.android.data.ArmouryUiAction
 import dev.armoury.android.utils.ArmouryMessageUtils
 import dev.armoury.android.viewmodel.ArmouryListViewModel
 import dev.armoury.android.widget.data.MessageModel
 
-abstract class ArmouryListFragment<T : ViewDataBinding, V : ArmouryListViewModel<*>> :
-    ArmouryFragment<T, V>() {
+abstract class ArmouryListFragment<UA: ArmouryUiAction, T : ViewDataBinding, V : ArmouryListViewModel<UA, *>> :
+    ArmouryFragment<UA, T, V>() {
 
     abstract override fun getRefreshLayout(): SwipeRefreshLayout?
 
