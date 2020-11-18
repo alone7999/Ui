@@ -12,10 +12,11 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import dev.armoury.android.data.ArmouryUiAction
 import dev.armoury.android.viewmodel.ArmouryViewModel
 import timber.log.Timber
 
-abstract class ArmouryFragment<T : ViewDataBinding, V : ArmouryViewModel> : Fragment() {
+abstract class ArmouryFragment<UA: ArmouryUiAction, T : ViewDataBinding, V : ArmouryViewModel<UA>> : Fragment() {
 
     protected lateinit var activity: AppCompatActivity
     protected lateinit var viewDataBinding: T
@@ -104,6 +105,7 @@ abstract class ArmouryFragment<T : ViewDataBinding, V : ArmouryViewModel> : Frag
     }
 
     protected open fun startObserving() {
+        viewModel.uiAction.observe(viewLifecycleOwner, this::handleUiAction)
 //        TODO
         /*viewModel.messageText.observe(viewLifecycleOwner, Observer {
             if (!TextUtils.isEmpty(it)) {
@@ -123,6 +125,8 @@ abstract class ArmouryFragment<T : ViewDataBinding, V : ArmouryViewModel> : Frag
     protected abstract fun doOtherTasks()
 
     protected abstract fun setViewNeededData()
+
+    protected open fun handleUiAction(action: UA?) {}
 
     private fun logState(state: String) {
         Timber.v("${javaClass.simpleName} $state")
