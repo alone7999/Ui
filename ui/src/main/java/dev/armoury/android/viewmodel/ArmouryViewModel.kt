@@ -25,7 +25,7 @@ import java.net.HttpURLConnection
 abstract class ArmouryViewModel<UA : ArmouryUiAction>(protected val applicationContext: Application) :
     AndroidViewModel(applicationContext), ViewModelGeneralFunctions {
 
-    private val _authenticationFailed = MutableLiveData(false)
+    private val _authenticationFailed = SingleLiveEvent(value = false)
     val authenticationFailed: LiveData<Boolean>
         get() = _authenticationFailed
 
