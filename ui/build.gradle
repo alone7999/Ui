@@ -14,7 +14,7 @@ android {
     defaultConfig {
         targetSdkVersion 30
         versionCode 85
-
+        versionName "0.4.11"
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -31,12 +31,10 @@ android {
         sdk1920 {
             minSdkVersion 19
             dimension "sdk"
-            versionName "0.5.0-BC" // Backward Compatibility
         }
         sdk2130 {
             minSdkVersion 21
             dimension "sdk"
-            versionName "0.5.0"
         }
     }
 
@@ -84,4 +82,27 @@ dependencies {
 
     //  Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
+}
+
+group = 'com.github.mirceanis.multi-flavor-lib-demo'
+version = library_version
+
+if (android.productFlavors.size() > 0) {
+    android.libraryVariants.all { variant ->
+
+        if (variant.name.toLowerCase().contains("debug")) {
+            return
+        }
+
+        def bundleTask = tasks["bundle${variant.name.capitalize()}Aar"]
+
+        artifacts {
+            archives(bundleTask.archivePath) {
+                classifier variant.flavorName
+                builtBy bundleTask
+                name = project.name
+            }
+        }
+
+    }
 }
