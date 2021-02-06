@@ -48,6 +48,12 @@ abstract class ArmouryViewModel<UA : ArmouryUiAction>(protected val applicationC
     val showLoading: LiveData<Boolean>
         get() = _showLoading
 
+    var customizeBackButton: Boolean = false
+        protected set
+
+    var customizeNavigateUpButton: Boolean = false
+        protected set
+
     /**
      * All request codes which are for those requests that are not
      * needed to show a loading indicator, should be added to this set

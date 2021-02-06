@@ -100,4 +100,14 @@ abstract class ArmouryActivity<UA: ArmouryUiAction, T: ViewDataBinding, V: Armou
         Timber.v("${javaClass.simpleName} $state")
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        return if (currentFragment()?.customizeNavigateUpPressed() != true) super.onSupportNavigateUp() else true
+    }
+
+    override fun onBackPressed() {
+        if (currentFragment()?.customizeBackButtonPressed() != true) super.onBackPressed()
+    }
+
+    open fun currentFragment() : ArmouryFragment<*,*,*>? = null
+
 }

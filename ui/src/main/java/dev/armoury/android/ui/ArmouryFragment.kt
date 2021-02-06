@@ -26,6 +26,28 @@ abstract class ArmouryFragment<UA: ArmouryUiAction, T : ViewDataBinding, V : Arm
 
     open fun getRefreshLayout(): SwipeRefreshLayout? = null
 
+    fun customizeBackButtonPressed() : Boolean {
+        return if (viewModel.customizeBackButton) {
+            onBackButtonPressed()
+            true
+        } else {
+            false
+        }
+    }
+
+    fun customizeNavigateUpPressed() : Boolean {
+        return if (viewModel.customizeNavigateUpButton) {
+            onNavigateUpPressed()
+            true
+        } else {
+            false
+        }
+    }
+
+    open fun onBackButtonPressed() {}
+
+    open fun onNavigateUpPressed() {}
+
     override fun onAttach(context: Context) {
         logState("Attached")
         super.onAttach(context)
