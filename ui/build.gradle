@@ -14,7 +14,6 @@ android {
     defaultConfig {
         targetSdkVersion 30
         versionCode 85
-        versionName "0.4.10"
 
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -32,10 +31,12 @@ android {
         sdk1920 {
             minSdkVersion 19
             dimension "sdk"
+            versionName "0.5.0-BC" // Backward Compatibility
         }
         sdk2130 {
             minSdkVersion 21
             dimension "sdk"
+            versionName "0.5.0"
         }
     }
 
