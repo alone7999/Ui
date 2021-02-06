@@ -13,8 +13,8 @@ android {
 
     defaultConfig {
         targetSdkVersion 30
-        versionCode 84
-        versionName "0.4.9"
+        versionCode 85
+        versionName "0.4.10"
 
         consumerProguardFiles "consumer-rules.pro"
     }
