@@ -22,7 +22,7 @@ abstract class ArmouryWebViewViewModel<UA : ArmouryUiAction>(applicationContext:
     val webUrl: LiveData<String?>
         get() = _webUrl
 
-    override val messageViewCallback = object : MessageView.Callbacks {
+    override val messageViewCallback = object : MessageView.SimpleCallbacks() {
         override fun onButtonClicked(messageModel: MessageModel?) {
             _messageModel.value = loadingMessageModel
             _webUrl.call()

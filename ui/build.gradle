@@ -14,8 +14,8 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 30
-        versionCode 90
-        versionName "0.4.14"
+        versionCode 92
+        versionName "0.4.16"
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -61,7 +61,7 @@ dependencies {
     //  Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
     //  Retrofit Coroutines Support
     implementation 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2'
 

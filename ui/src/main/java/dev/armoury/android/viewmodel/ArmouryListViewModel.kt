@@ -34,7 +34,7 @@ abstract class ArmouryListViewModel<UA: ArmouryUiAction, LRM : ArmouryListRowMod
         get() = _state
 
     //    Listeners
-    val loadMoreClickHandles: MessageView.Callbacks = object : MessageView.Callbacks {
+    val loadMoreClickHandles: MessageView.Callbacks = object : MessageView.SimpleCallbacks() {
         override fun onButtonClicked(messageModel: MessageModel?) {
             sendServerRequest(false)
             onLoadMoreRequestResend()
