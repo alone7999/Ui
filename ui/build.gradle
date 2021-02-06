@@ -12,7 +12,6 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 17
         targetSdkVersion 30
         versionCode 84
         versionName "0.4.9"
@@ -24,6 +23,19 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    publishNonDefault true
+    flavorDimensions "sdk"
+    productFlavors {
+        sdk1920 {
+            minSdkVersion 19
+            dimension "sdk"
+        }
+        sdk2130 {
+            minSdkVersion 21
+            dimension "sdk"
         }
     }
 
