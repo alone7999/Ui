@@ -109,7 +109,7 @@ abstract class ArmouryViewModel<UA : ArmouryUiAction>(protected val applicationC
     //    the Coroutine runs using the Main (UI) dispatcher
     protected val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
 
-    open val messageViewCallback = object : MessageView.Callbacks {
+    open val messageViewCallback = object : MessageView.SimpleCallbacks() {
         override fun onButtonClicked(messageModel: MessageModel?) {
             if (messageModel?.state == MessageView.States.ERROR)
                 sendFirstRequestAgain()
