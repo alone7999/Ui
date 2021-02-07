@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 30
@@ -12,10 +13,8 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 17
         targetSdkVersion 30
         versionCode 92
-        versionName "0.4.16"
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -25,6 +24,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    defaultPublishConfig "sdk2230Release"
+    flavorDimensions "sdkLevel"
+
+    productFlavors {
+        sdk2021 {
+            minSdkVersion 20
+            dimension "sdkLevel"
+            versionName "0.4.16-bc"
+        }
+        sdk2230 {
+            minSdkVersion 22
+            dimension "sdkLevel"
+            versionName "0.4.16"
+        }
+    }
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -70,4 +86,36 @@ dependencies {
 
     //  Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
+}
+
+group = 'com.github.mirceanis.multi-flavor-lib-demo'
+if (android.productFlavors.size() > 0) {
+    android.libraryVariants.all { variant ->
+
+        if (variant.name.toLowerCase().contains("debug")) {
+            return
+        }
+
+        def bundleTask = tasks["bundle${variant.name.capitalize()}Aar"]
+
+        artifacts {
+            archives(bundleTask.archivePath) {
+                classifier variant.flavorName
+                builtBy bundleTask
+                name = project.name
+            }
+        }
+
+        def flavorName = variant.flavorName.toLowerCase()
+        def flavorSourcesTask = tasks.create(name : "${flavorName}SourcesJar", type: Jar) {
+            classifier = "${flavorName}-sources"
+            from android.sourceSets.main.javaDirectories
+            from android.sourceSets[flavorName].javaDirectories
+        }
+
+        artifacts {
+            archives flavorSourcesTask
+        }
+
+    }
 }
