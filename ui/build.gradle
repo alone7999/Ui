@@ -20,6 +20,7 @@ android {
 
     defaultConfig {
         targetSdkVersion 30
+        versionName "0.4.26"
         versionCode 92
         consumerProguardFiles "consumer-rules.pro"
         missingDimensionStrategy 'sdkLevel', 'sdk2230'
@@ -37,12 +38,10 @@ android {
         sdk2021 {
             minSdkVersion 20
             dimension "sdkLevel"
-            versionName "0.4.20-bc"
         }
         sdk2230 {
             minSdkVersion 22
             dimension "sdkLevel"
-            versionName "0.4.20"
         }
     }
 
