@@ -101,7 +101,7 @@ afterEvaluate {
             }
             mavenSkd2021 (MavenPublication) {
                 from components.sdk2021Release
-                artifactId "threeten"
+                artifactId "$project.name-threeten"
             }
         }
     }
