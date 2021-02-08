@@ -97,10 +97,15 @@ afterEvaluate {
         publications {
             mavenSdk2230 (MavenPublication) {
                 from components.sdk2230Release
+                artifactId "main"
+                groupId = 'dev.armoury.android'
+                version = '0.4.30'
             }
             mavenSkd2021 (MavenPublication) {
                 from components.sdk2021Release
-                artifactId "$project.name-threeten"
+                artifactId "backward"
+                groupId = 'dev.armoury.android'
+                version = '0.4.30-bc'
             }
         }
     }
