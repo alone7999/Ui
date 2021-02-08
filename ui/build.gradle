@@ -99,13 +99,13 @@ afterEvaluate {
                 from components.sdk2230Release
                 artifactId "main"
                 groupId = 'dev.armoury.android'
-                version = '0.4.30'
+                version = '0.4.31'
             }
             mavenSkd2021 (MavenPublication) {
                 from components.sdk2021Release
                 artifactId "backward"
                 groupId = 'dev.armoury.android'
-                version = '0.4.30-bc'
+                version = '0.4.31'
             }
         }
     }
