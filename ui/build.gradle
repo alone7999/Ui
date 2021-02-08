@@ -104,7 +104,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
 }
 
-group = 'com.github.mirceanis.multi-flavor-lib-demo'
 group = 'com.github.ArmouryDev.Ui'
 
 if (android.productFlavors.size() > 0) {
