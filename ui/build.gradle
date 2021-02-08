@@ -2,11 +2,17 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
+
+    libraryVariants.all {
+        generateBuildConfigProvider.configure {
+            enabled = false
+        }
+    }
 
     buildFeatures {
         dataBinding = true
@@ -16,6 +22,7 @@ android {
         targetSdkVersion 30
         versionCode 92
         consumerProguardFiles "consumer-rules.pro"
+        missingDimensionStrategy 'sdkLevel', 'sdk2230'
     }
 
     buildTypes {
@@ -25,9 +32,7 @@ android {
         }
     }
 
-    defaultPublishConfig "sdk2230Release"
     flavorDimensions "sdkLevel"
-
     productFlavors {
         sdk2021 {
             minSdkVersion 20
@@ -88,51 +93,16 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.1'
 }
 
-task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from android.sourceSets.main.javaDirectories
-}
-
-artifacts {
-    archives sourcesJar
-}
-
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-}
-
-group = 'com.github.ArmouryDev.Ui'
-
-if (android.productFlavors.size() > 0) {
-    android.libraryVariants.all { variant ->
-
-        if (variant.name.toLowerCase().contains("debug")) {
-            return
-        }
-
-        def bundleTask = tasks["bundle${variant.name.capitalize()}Aar"]
-
-        artifacts {
-            archives(bundleTask.archivePath) {
-                classifier variant.flavorName
-                builtBy bundleTask
-                name = project.name
+afterEvaluate {
+    publishing {
+        publications {
+            mavenSdk2230 (MavenPublication) {
+                from components.sdk2230Release
+            }
+            mavenSkd2021 (MavenPublication) {
+                from components.sdk2021Release
+                artifactId "$project.name-threeten"
             }
         }
-
-        def flavorName = variant.flavorName.toLowerCase()
-        def flavorSourcesTask = tasks.create(name : "${flavorName}SourcesJar", type: Jar) {
-            classifier = "${flavorName}-sources"
-            from android.sourceSets.main.javaDirectories
-            from android.sourceSets[flavorName].javaDirectories
-        }
-
-        artifacts {
-            archives flavorSourcesTask
-        }
-
     }
 }
