@@ -54,7 +54,8 @@ abstract class ArmouryFragment<UA: ArmouryUiAction, T : ViewDataBinding, V : Arm
         if (context is ArmouryActivity<*, *, *>) {
             activity = context
         } else {
-            throw IllegalStateException("You have to use a BaseActivity or one of its children as the container activity")
+            //  TODO : Later
+//            throw IllegalStateException("You have to use a BaseActivity or one of its children as the container activity")
         }
     }
 
