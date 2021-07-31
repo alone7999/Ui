@@ -21,6 +21,7 @@ import retrofit2.Response
 import timber.log.Timber
 import java.io.IOException
 import java.net.HttpURLConnection
+import javax.net.ssl.SSLHandshakeException
 
 abstract class ArmouryViewModel<UA : ArmouryUiAction>(protected val applicationContext: Application) :
     AndroidViewModel(applicationContext), ViewModelGeneralFunctions {
@@ -250,7 +251,11 @@ abstract class ArmouryViewModel<UA : ArmouryUiAction>(protected val applicationC
             }
             is IOException -> {
                 if (ArmouryConnectionUtils.isInternetAvailable(context = applicationContext)) {
-                    onSomethingWentWrong(requestCode = requestCode)
+                    if (exception is SSLHandshakeException) {
+                        onSSLHandshakeException(requestCode = requestCode)
+                    } else {
+                        onSomethingWentWrong(requestCode = requestCode)
+                    }
                 } else {
                     val errorMessageModel = MessageModel(
                         state = MessageView.States.ERROR,
@@ -280,6 +285,24 @@ abstract class ArmouryViewModel<UA : ArmouryUiAction>(protected val applicationC
             state = MessageView.States.ERROR,
             titleTextRes = R.string.title_error_something_went_wrong,
             descriptionTextRes = R.string.message_error_something_went_wrong,
+            buttonTextRes = R.string.button_retry
+        )
+        onRequestFailed(
+            errorModel = ErrorModel(
+                messageModel = errorMessageModel,
+                responseCode = ArmouryConnectionUtils.SOMETHING_WENT_WRONG,
+                code = ArmouryConnectionUtils.SOMETHING_WENT_WRONG,
+                requestCode = requestCode,
+                reason = RequestErrorReasons.SOMETHING_WENT_WRONG
+            )
+        )
+    }
+
+    private fun onSSLHandshakeException(requestCode: Int) {
+        val errorMessageModel = MessageModel(
+            state = MessageView.States.ERROR,
+            titleTextRes = R.string.title_error_handshake_certificate_exception,
+            descriptionTextRes = R.string.message_error_handshake_certificate_exception,
             buttonTextRes = R.string.button_retry
         )
         onRequestFailed(
